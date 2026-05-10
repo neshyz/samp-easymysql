@@ -60,6 +60,16 @@ static s_ErrorBuffer[EZMYSQL_MAX_ERROR_BUFFER_SIZE];
     #define EZMYSQL_LOG_LEVEL (LOG_WARN)
 #endif
 
+// definir consoleappend de ezmysql
+#if !defined EZMYSQL_LOG_CONSOLE
+    #define EZMYSQL_LOG_CONSOLE (LOG_ERROR)
+#endif
+
+// definir fileappend de ezmysql
+#if !defined EZMYSQL_LOG_FILE
+    #define EZMYSQL_LOG_FILE (LOG_ALL)
+#endif
+
 
 #if !defined EZMYSQL_FORCE_CRASH
     #define EZMYSQL_FORCE_CRASH (true)
@@ -92,7 +102,7 @@ static Logger:s_Logger = INVALID_LOGGER_ID;
 
 stock ezmysql_init()
 {
-    s_Logger = GetLogger("ezmysql", .fileAppend = true, .consoleAppend = true, .level = EZMYSQL_LOG_LEVEL);
+    s_Logger = GetLogger("ezmysql", .fileAppend = EZMYSQL_LOG_FILE, .consoleAppend = EZMYSQL_LOG_CONSOLE, .level = EZMYSQL_LOG_LEVEL);
 
     if(!IsValidLogger(s_Logger)) {
         return 0;
